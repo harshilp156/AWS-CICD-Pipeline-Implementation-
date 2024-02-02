@@ -3,6 +3,7 @@
 
 ## Overview
 This project showcases the implementation of a robust Continuous Integration and Continuous Deployment (CI/CD) pipeline utilizing AWS managed services. The pipeline seamlessly integrates AWS CodeCommit for version control, AWS CodeBuild for automated builds, AWS S3 for artifact storage, AWS CodeDeploy for application deployment on EC2 instances, and AWS CodePipeline to orchestrate the entire workflow.
+![awscicdimage](https://github.com/harshilp156/AWS-CICD-Pipeline-Implementation-/assets/67538347/da062e6f-431e-4a85-b39d-17115adc7107)
 
 
 
