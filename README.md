@@ -1,40 +1,41 @@
 
-# CICD Pipeline On AWS Mannaged Service
+# AWS Managed CI/CD Pipeline
 
-In this project I have implemented entire CICD pipeline on aws managed services.
+## Overview
+This project showcases the implementation of a robust Continuous Integration and Continuous Deployment (CI/CD) pipeline utilizing AWS managed services. The pipeline seamlessly integrates AWS CodeCommit for version control, AWS CodeBuild for automated builds, AWS S3 for artifact storage, AWS CodeDeploy for application deployment on EC2 instances, and AWS CodePipeline to orchestrate the entire workflow.
 
 
 
 ## Code commit
 
-Codecommit : For storing and managing my code I have used AWS code commit.
+For code storage and management, AWS CodeCommit is employed.
 
-Now a root user cannot configure using ssh therefore we need a IAM user to configure and clone the repository into our local machine.
-Also IAM user needs role to access the AWS Codecommit service.
+A root user is unable to configure using SSH, necessitating an IAM user for repository configuration and cloning.
 
-To clone and commit into this repository we need a HTTPS git credentials for AWS Codecommit for this user. 
+The IAM user requires a role to access AWS CodeCommit.
 
+HTTPS Git credentials are required for cloning and committing into the repository for this user.
 
 ![Screenshot (543)](https://github.com/harshilp156/AWS-CICD-Pipeline-Implementation-/assets/67538347/0482f142-e05b-4927-85f2-5ff626ce0332)
 
 
 ## Code Build
 
-Now for build my code I have used AWS Code Build service.
+CodeBuild, an AWS service, is utilized for code building.
 
-It works almost same as jenkins.
+Functions similarly to Jenkins.
 
-Source Provider : AWS Code Commit (Master Branch)
+Source Provider: AWS CodeCommit (Master Branch).
 
-Environment : AWS codebild managed Image
+Environment: AWS CodeBuild managed Image.
 
-Operating System : Ubuntu
+Operating System: Ubuntu.
 
-Runttime: Standard
+Runtime: Standard.
 
-Image : Latest Version
+Image: Latest Version.
 
-Also to provide access of other services to the AWS codebild ,we need to give it a service role.
+A service role is required to provide access to other services for AWS CodeBuild.
 
 
 ![Screenshot (544)](https://github.com/harshilp156/AWS-CICD-Pipeline-Implementation-/assets/67538347/294b78e3-c69b-4b51-801a-2438b6aacef3)
@@ -80,55 +81,26 @@ Here the CI (coninuous integration) part is complete.
 
 ## Storing Artifact
 
-After the Code Build phase we need to have storage to save our build Artifacts.
+AWS S3 (Simple Storage Service) is used for storing build artifacts.
 
-For that I am using AWS S3(Simple Storage Service).
-
-I have created a Bucket and configured the Artifact so that all my Artifact files can be stored in AWS S3 in Zip format.
+A bucket is created to store all artifact files in AWS S3 in Zip format.
 
 ![Screenshot (547)](https://github.com/harshilp156/AWS-CICD-Pipeline-Implementation-/assets/67538347/b296b171-4f8a-4324-81cd-3ce27f0eb707)
 
 
 ## Code Deploy
 
-Now we need to creat an application to deploy our code on AWS code deploy service.
+Application deployment on AWS CodeDeploy service is executed through AWS EC2 instances.
 
-The application will use AWS EC2 instances to deploy my code.
+Deployment Group: A set of one or more servers where the application is deployed.
 
-Now after creating application , a deployment grout is needed.
+CodeDeploy requires a service role to access other services (EC2, S3, CodeBuild, etc.).
 
-Deployment Group : This is set of one or more servers where the application will be deployed.
-
-Also Code deploy needs a service role to access other services (ec2, s3, codebuild ,etc..).
-
-Also I will deploy this application on EC2 instance for that I need an EC2 instance.
-
-## EC2 instance configurations
-
-AMI : Ubuntu (Free Tier Eligible)
-
-Instance Tyoe : t2.micro
-
-Key Pair : To ssh
-
-Default VPC
-
-Security groups : 
-
-Allow ssh traffic from : Anywhere
-
-Allow HTTP traffic from internet
-
-Allow HTTPS traffic from internet
-
-Storage : 8gb
-
-Also we need to configure the ec2 instance service role in order to give access of other services to this instance.
-
-
-Now attached this EC2 instance with the deployment group.
+EC2 instance configurations include Ubuntu (Free Tier Eligible), t2.micro, SSH key pair, Default VPC, security group settings, and 8GB storage.
 
 Also we need a code deploy agent on our ec2 instance.
+
+A CodeDeploy agent is installed on the EC2 instance using a provided bash script.
 
 AWS CodeDeploy agent :This is a software component that runs on the instances in our deployment group. It is a lightweight daemon process that facilitates the deployment of applications and updates on Amazon EC2 instances.The agent is a critical part of the AWS CodeDeploy service, enabling seamless and automated deployment workflows.
 
@@ -223,21 +195,17 @@ At this point my continuous delivery part is completed.
 
 ## Code Pipeline 
 
-Now for continuous integration and continuous delivery for our application we need to create a code pipeline.
+AWS CodePipeline, a CI/CD service, is utilized for continuous integration and continuous delivery.
 
-AWS CodePipeline is a continuous integration and continuous delivery (CI/CD) service provided by Amazon Web Services (AWS). Its primary purpose is to automate and streamline the process of releasing software changes. CodePipeline facilitates the delivery of code changes from source code repositories through various stages, such as build, test, and deployment, ultimately enabling a more efficient and reliable software release process.
+A service role for CodePipeline is required for accessing other services.
 
-We need a service role for code pipeline to provide access of other Services.
+Source Provider: AWS CodeCommit.
 
-Source provider : AWS Codecommit
+Build Provider: AWS CodeBuild.
 
-Code pipeline will continuously monitor for code change and release the changes after every commit to the main branch.
+Deploy Provider: AWS CodeDeploy.
 
-Build Provider : AWS Code Build
-
-Deploy Provider : AWS Code Deploy
-
-After the creation of the code pipeline it will automaticlly start the process of source -> Build -> Deploy.
+The Code Pipeline is set to monitor code changes and release them after every commit to the main branch.
 
 ##Before the code changes
 
@@ -267,4 +235,10 @@ After the creation of the code pipeline it will automaticlly start the process o
 **VIM**
 
 **GIT**
+
+## Screenshots:
+
+Screenshots are included at relevant stages to provide visual representation.
+
+This project follows best practices for CI/CD implementation, ensuring an efficient and reliable software release process.
 
